@@ -34,9 +34,21 @@ rus_sov_line = figB.add_scatter(name = "Russia / Sovjet" , y = athlete_events_pe
 rus_sov = russia_sovjet_merged_all.groupby(["Year"]).median().reset_index()
 all_count = athlete_events.groupby(["Year"]).median().reset_index()
 
-
+#Plotting the line-graph.
 figC = px.line(title = "Median age for Russia / Sovjet per Olympic Game")
-rus_sov_line = figB.add_scatter(name = "Russia / Sovjet" , y = rus_sov["Age"], x = rus_sov["Year"], mode='lines+markers')
-all_countires = figB.add_scatter(name = "Average for all countries" , y = all_count["Age"], x = all_count["Year"], mode='lines+markers')
+rus_sov_line = figC.add_scatter(name = "Russia / Sovjet" , y = rus_sov["Age"], x = rus_sov["Year"], mode='lines+markers')
+all_countires = figC.add_scatter(name = "Average for all countries" , y = all_count["Age"], x = all_count["Year"], mode='lines+markers')
 figC.show()
+
+#Sorting and structuring the data for the plot-D.
+rus_sov_D = russia_sovjet_merged_all.groupby(["Event"]).median().reset_index()
+top5_tallest_events = rus_sov_D.sort_values("Height",ascending=False).head(5)
+top5_shortest_events = rus_sov_D.sort_values("Height",ascending=True).head(5)
+
+#Plotting the bar-graph.
+figD = px.bar(title = "Median height for Russia / Sovjet per Olympic Game",)
+tallest= figD.add_bar(name = "Top5 tallest sports" , y = top5_tallest_events ["Height"], x = top5_tallest_events ["Event"])
+shortest = figD.add_bar(name = "Top5 shortest sports",y=  top5_shortest_events ["Height"], x = top5_shortest_events["Event"])
+figD.show()
+
 
