@@ -29,5 +29,14 @@ figB = px.line(title = "Medals per Olympic Game for Russia / Sovjet")
 rus_sov_line = figB.add_scatter(name = "Russia / Sovjet" , y = athlete_events_per_year["Medal"], x = athlete_events_per_year["Year"], mode='lines+markers')
 #figB.show()
 
-#Sorting and structuring the data for the plot-A.
-athlete_events_per_year = russia_sovjet_merged_all.groupby(["Age"]).median()
+
+#Sorting and structuring the data for the plot-C.
+rus_sov = russia_sovjet_merged_all.groupby(["Year"]).median().reset_index()
+all_count = athlete_events.groupby(["Year"]).median().reset_index()
+
+
+figC = px.line(title = "Median age for Russia / Sovjet per Olympic Game")
+rus_sov_line = figB.add_scatter(name = "Russia / Sovjet" , y = rus_sov["Age"], x = rus_sov["Year"], mode='lines+markers')
+all_countires = figB.add_scatter(name = "Average for all countries" , y = all_count["Age"], x = all_count["Year"], mode='lines+markers')
+figC.show()
+
