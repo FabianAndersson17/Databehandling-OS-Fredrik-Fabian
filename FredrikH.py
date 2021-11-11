@@ -50,7 +50,16 @@ top5_shortest_events = rus_sov_D.sort_values("Height",ascending=True).head(5)
 figD = px.bar(title = "Median height for Russia / Sovjet per Olympic Game",)
 tallest= figD.add_bar(name = "Top5 tallest sports" , y = top5_tallest_events ["Height"], x = top5_tallest_events ["Event"])
 shortest = figD.add_bar(name = "Top5 shortest sports",y=  top5_shortest_events ["Height"], x = top5_shortest_events["Event"])
-plot_function("bar",top5_tallest_events,"Event","Height","Top5 tallest sports","Median height")
 #figD.show()
 
+#Exercise 2: Choosed sport = Football
+
+football_data = athlete_events[athlete_events["Sport"].isin(["Football"])].reset_index()
+football_data = football_data.drop_duplicates(subset=["Event", "Games", "Medal"])
+football_data = football_data.groupby(["Team"]).count().reset_index()
+football_data = football_data.sort_values("Medal",ascending=False).head(42)
+
+#Plotting the bar-graph.
+figE = px.bar(football_data, title = "Fussball", y = "Medal", x = "Team", color= "Team")
+figE.show()
 
