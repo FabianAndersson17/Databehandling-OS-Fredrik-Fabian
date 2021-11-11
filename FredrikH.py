@@ -59,5 +59,7 @@ football_data = football_data.drop_duplicates(subset=["Event", "Games", "Medal"]
 football_data = football_data.groupby(["Team"]).count().reset_index()
 football_data = football_data.sort_values("Medal",ascending=False).head(42)
 
+#Plotting the bar-graph.
 figE = px.bar(football_data, title = "Fussball", y = "Medal", x = "Team", color= "Team")
 figE.show()
+
