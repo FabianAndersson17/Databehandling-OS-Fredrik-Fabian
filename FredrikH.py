@@ -9,6 +9,8 @@ athlete_events = pd.read_csv("Data/athlete_events.csv")
 
 #Sorting and structuring the data for the plot-A.
 russia_sovjet_merged_all = athlete_events[athlete_events["NOC"].isin(["RUS", "URS"])].reset_index()
+#Dropping all duplicates of medals in the same event (for example, fotball only counts as 1 medal instead of 22 
+# because it's 22 players in a team)
 russia_sovjet_merged_dropped = russia_sovjet_merged_all.drop_duplicates(subset=["Event", "Games", "Medal"])
 rus_sov_grouped_per_event = russia_sovjet_merged_dropped.groupby(["Event"]).count().reset_index()
 sorted_per_medal = rus_sov_grouped_per_event.sort_values("Medal",ascending=False)
