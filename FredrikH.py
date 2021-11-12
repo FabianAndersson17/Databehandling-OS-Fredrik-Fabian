@@ -61,5 +61,16 @@ football_data = football_data.sort_values("Medal",ascending=False).head(42)
 
 #Plotting the bar-graph.
 figE = px.bar(football_data, title = "Fussball", y = "Medal", x = "Team", color= "Team")
-figE.show()
+#figE.show()
+
+#Exercise 2: Choosed sport 2 = Tennis
+
+tennis_data = athlete_events[athlete_events["Sport"].isin(["Tennis"])].reset_index()
+tennis_data = tennis_data.drop_duplicates(subset=["Event", "Games", "Medal"])
+tennis_data = tennis_data.groupby(["Team"]).count().reset_index()
+tennis_data = tennis_data.sort_values("Medal",ascending=False)
+
+#Plotting the bar-graph.
+figF = px.bar(tennis_data, title = "Tennis", y = "Medal", x = "Team", color= "Team")
+figF.show()
 
