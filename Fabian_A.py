@@ -23,7 +23,7 @@ def data_locator(sport):
 
     sport_ages = sport_data["Age"].unique().tolist()
     sport_ages = sport_ages.sort()
-    sport_age_dist = sport_data[sport_data["Age"].isin(sport_ages)]
+    sport_age_dist = sport_data[sport_data["Age"].isin([sport_ages])]
     sport_age_dist = sport_age_dist["Age"].value_counts().reset_index().rename({"Age": "Age count", "index": "Age"}, axis="columns")
     sport_age_dist = sport_age_dist.sort_values(by="Age").reset_index(drop=True)
 
