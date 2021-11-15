@@ -23,3 +23,4 @@ def data_locator(sport):
     fig = px.bar(medal_dist, x="NOC2", y=["gold count", "silver count", "bronze count"], title=f"Number of medals in {sport} per country",
             labels={"value": "Medal count", "NOC2": "Countries"})
     fig.update_layout(barmode="group")
+    return fig

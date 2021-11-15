@@ -7,7 +7,7 @@ import dash_bootstrap_components as dbc
 from FredrikH import testfunc
 from Fabian_A import data_locator
 
-symbol_dict = dict(TENNIS="Tennis", FOTB="Football", TAEK="Taekwondo", SPEE="Speedskating")
+symbol_dict = dict(TENNIS="Tennis", FOTBALL="Football", TAEKWONDO="Taekwondo", SPEEDSKATING="Speed Skating")
 
 stock_options_dropdown = [{"label": name, "value": symbol}
                           for name,symbol in symbol_dict.items()]
@@ -24,9 +24,10 @@ app.layout = dbc.Container([
         dbc.CardBody(html.H1("Russia / Sovjet dashboard",
                              className="text-primary m-3"))
     ], className="mt-3"),
+    
 
     dbc.Row([
-        dbc.Col(html.P("Choose a stock"), className="mt-1",
+        dbc.Col(html.P("Choose a sport"), className="mt-1",
                 lg="4", xl={"size": 2, "offset": 2}),
         dbc.Col(
             dcc.Dropdown(id='sport-picker-dropdown', className='',
@@ -45,7 +46,7 @@ app.layout = dbc.Container([
 
 def update_graph(sport):
 
-    fig = testfunc(sport)
+    fig = data_locator(sport)
 
     return fig
 
