@@ -12,10 +12,17 @@ symbol_dict = dict(TENNIS="Tennis", FOTBALL="Football", TAEKWONDO="Taekwondo", S
 
 dashboard_name_dict = dict(Sovjet_Russia ="Sovjet / Russia Dashboard", Choosen_countries = "Choosen countries Dashboard")
 
+plot_name_dict = dict(Plot1 ="Plot 1", Plot2 = "Plot2")
+
+plot_options_dropdown = [{"label": name, "value": symbol}
+                          for name,symbol in plot_name_dict.items()]
+
 stock_options_dropdown = [{"label": name, "value": symbol}
                           for name,symbol in symbol_dict.items()]
 dashboard_names = [{"label": name, "value": symbol}
                           for name,symbol in dashboard_name_dict.items()]
+plot_options_dropdown = [{"label": name, "value": symbol}
+                          for name,symbol in symbol_dict.items()]
 
 stylesheets = [dbc.themes.SOLAR]
 
@@ -151,7 +158,7 @@ def render_page_content(pathname):
                 lg="4", xl={"size": 2, "offset": 2}),
         dbc.Col(
             dcc.Dropdown(id='sport-picker-dropdown', className='',
-                         options=stock_options_dropdown,
+                         options=plot_options_dropdown,
                          value='AAPL'
                          ),
             lg="4", xl="3")]),
