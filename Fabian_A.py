@@ -20,6 +20,15 @@ def data_locator(sport):
     bronze_dist = bronze_dist["NOC"].value_counts().reset_index().rename({"NOC": "bronze count", "index": "NOC3"}, axis="columns")
     medal_dist = pd.concat([gold_dist, silver_dist, bronze_dist], axis=1, join="outer")
     medal_dist = medal_dist.drop(["NOC1", "NOC3"], axis="columns")
-    fig = px.bar(medal_dist, x="NOC2", y=["gold count", "silver count", "bronze count"], title=f"Number of medals in {sport} per country",
+
+    sport_ages = sport_data["Age"].unique().tolist()
+    sport_ages = sport_ages.sort()
+    sport_age_dist = sport_data[sport_data["Age"].isin(sport_ages)]
+    sport_age_dist = sport_age_dist["Age"].value_counts().reset_index().rename({"Age": "Age count", "index": "Age"}, axis="columns")
+    sport_age_dist = sport_age_dist.sort_values(by="Age").reset_index(drop=True)
+
+    fig_medal = px.bar(medal_dist, x="NOC2", y=["gold count", "silver count", "bronze count"], title=f"Number of medals in {sport} per country",
             labels={"value": "Medal count", "NOC2": "Countries"})
-    fig.update_layout(barmode="group")
+    fig_medal.update_layout(barmode="group")
+    fig_age = px.bar(sport_age_dist, x="Age", y="Age count", title=f"Ages distrubution in {sport}")
+    return [fig_medal, fig_age]
