@@ -8,7 +8,7 @@ import dash_bootstrap_components as dbc
 
 #stock_data_object = StockDataLocal()
 
-symbol_dict = dict(AAPL="Apple", NVDA="Nvidia", TSLA="Tesla", IBM="IBM")
+symbol_dict = dict(AAPL="Tennis", NVDA="Football", TSLA="Taekwando", IBM="Speedskating")
 
 stock_options_dropdown = [{"label": name, "value": symbol}
                           for symbol, name in symbol_dict.items()]
