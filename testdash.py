@@ -12,7 +12,7 @@ symbol_dict = dict(TENNIS="Tennis", FOTBALL="Football", TAEKWONDO="Taekwondo", S
 stock_options_dropdown = [{"label": name, "value": symbol}
                           for name,symbol in symbol_dict.items()]
 
-stylesheets = [dbc.themes.SOLAR]
+stylesheets = [dbc.themes.JOURNAL]
 
 
 app = dash.Dash(__name__, external_stylesheets=stylesheets,
@@ -35,20 +35,22 @@ app.layout = dbc.Container([
                          value='AAPL'
                          ),
             lg="4", xl="3")]),
-        dcc.Graph(id = 'graph-picker')
+        dcc.Graph(id = 'graph-picker'),
+        dcc.Graph(id = 'graph-picker2')
         
             
             ])
 
 @app.callback(
     Output("graph-picker", "figure"),
+    Output("graph-picker2", "figure"),
     Input("sport-picker-dropdown", "value"))
 
 def update_graph(sport):
 
-    fig = data_locator(sport)
+    fig1, fig2 = data_locator(sport)
 
-    return fig
+    return fig1, fig2
 
 if __name__ == "__main__":
     app.run_server(debug=True)
