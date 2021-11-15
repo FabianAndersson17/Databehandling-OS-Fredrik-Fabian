@@ -4,11 +4,13 @@ import dash
 from dash.dependencies import Output, Input
 import plotly_express as px
 import dash_bootstrap_components as dbc
+from FredrikH import testfunc
+from Fabian_A import data_locator
 
-symbol_dict = dict(TENN="Tennis", FOTB="Football", TAEK="Taekwando", SPEE="Speedskating")
+symbol_dict = dict(TENNIS="Tennis", FOTB="Football", TAEK="Taekwondo", SPEE="Speedskating")
 
 stock_options_dropdown = [{"label": name, "value": symbol}
-                          for symbol, name in symbol_dict.items()]
+                          for name,symbol in symbol_dict.items()]
 
 stylesheets = [dbc.themes.SOLAR]
 
@@ -27,20 +29,23 @@ app.layout = dbc.Container([
         dbc.Col(html.P("Choose a stock"), className="mt-1",
                 lg="4", xl={"size": 2, "offset": 2}),
         dbc.Col(
-            dcc.Dropdown(id='stock-picker-dropdown', className='',
+            dcc.Dropdown(id='sport-picker-dropdown', className='',
                          options=stock_options_dropdown,
                          value='AAPL'
                          ),
-            lg="4", xl="3")])])
+            lg="4", xl="3")]),
+        dcc.Graph(id = 'graph-picker')
+        
+            
+            ])
 
 @app.callback(
-    Output("stock-graph", "figure"),
-    Input("stock-picker-dropdown", "value"))
-    
-def update_graph(json_df, stock, ohlc):
+    Output("graph-picker", "figure"),
+    Input("sport-picker-dropdown", "value"))
 
-    dff = pd.read_json(json_df)
-    fig = px.line(dff, x=dff.index, y=ohlc, title=symbol_dict[stock])
+def update_graph(sport):
+
+    fig = testfunc(sport)
 
     return fig
 
