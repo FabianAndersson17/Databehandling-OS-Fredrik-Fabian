@@ -1,4 +1,3 @@
-import re
 import pandas as pd
 import plotly_express as px
 
@@ -7,10 +6,10 @@ regions_path = "Data/noc_regions.csv"
 
 athlete_data = pd.read_csv(athlete_path)
 athlete_data = athlete_data.drop_duplicates(subset=["Event", "Games", "Medal"])
+russia_data = athlete_data[athlete_data["Team"].isin(["Russia", "Soviet Union"])].reset_index(drop=True)
 
-taekwondo_medal_list = []
+seasons_list = ["Summer", "Winter"]
 
-# for i in []
 def data_locator(sport):
     sport_data = athlete_data[athlete_data["Sport"].isin([sport])].reset_index(drop=True)
 
@@ -38,10 +37,22 @@ def data_locator(sport):
     all_data_age["Age in percentage"] = all_data_age["ID"] / all_data_age["Total participants"]
 
     fig_medal = px.bar(medal_dist, x="NOC2", y=["gold count", "silver count", "bronze count"], title=f"Number of medals in {sport} per country",
-            labels={"value": "Medal count", "NOC2": "Countries"})
+            labels={"value": "Medal count", "NOC2": "Countries"}, template="plotly_dark")
     fig_medal.update_layout(barmode="group")
 
-    fig_age = px.bar(sport_age_dist, x="Age", y="Age in percentage", title=f"Ages distrubution in {sport}", barmode = 'group')
+    fig_age = px.bar(sport_age_dist, x="Age", y="Age in percentage", title=f"Ages distrubution in {sport}", barmode = 'group', template="plotly_dark")
     fig_age.add_bar(name = "Age histogram all sports", x= all_data_age["Age"], y = all_data_age["Age in percentage"])
     
     return fig_medal, fig_age
+
+def medals_taken():
+        
+        for i, item in enumerate([summer_medals_RUS, winter_medals_RUS]):
+                item[i] = russia_data[russia_data["Season"].isin(seasons_list[i])].reset_index(drop=True)
+                russia_winter_gold = russia_winter_data[(russia_winter_data["Medal"] == "Gold")].reset_index(drop=True)
+                russia_winter_silver = russia_winter_data[(russia_winter_data["Medal"] == "Silver")].reset_index(drop=True)
+                russia_winter_bronze = russia_winter_data[(russia_winter_data["Medal"] == "Bronze")].reset_index(drop=True)
+                russia_winter_data = pd.concat([russia_winter_gold, russia_winter_silver, russia_winter_bronze])
+                russia_winter_medals = russia_winter_data["Year"].value_counts().reset_index().rename({"Year": "Medal count", "index": "Year"}, axis="columns")
+                russia_winter_medals = russia_winter_medals.sort_values(by="Year", ascending=True).reset_index(drop=True)
+                russia_winter_medals["Season"] = seasons_list[i]
