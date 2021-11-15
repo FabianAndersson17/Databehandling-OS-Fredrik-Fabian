@@ -112,9 +112,7 @@ def render_page_content(pathname):
     if pathname == "/":
         return html.Img(src='assets/Flag_of_the_Soviet_Union.png')
     elif pathname == "/page-1":
-        return html.P("Oh cool, this is page 1!")
-    elif pathname == "/page-2":
-        return  dbc.Container([
+        return dbc.Container([
 
     dbc.Card([
         dbc.CardBody(html.H1("Choosen sports dashboard (Taekwondo, Tennis, Football & Speedskating",
@@ -125,6 +123,31 @@ def render_page_content(pathname):
 
     dbc.Row([
         dbc.Col(html.P("Choose a sport"), className="mt-1",
+                lg="4", xl={"size": 2, "offset": 2}),
+        dbc.Col(
+            dcc.Dropdown(id='sport-picker-dropdown', className='',
+                         options=stock_options_dropdown,
+                         value='AAPL'
+                         ),
+            lg="4", xl="3")]),
+        dcc.Graph(id = 'graph-picker'),
+        dcc.Graph(id = 'graph-picker2')
+        
+            
+            ])
+    
+    elif pathname == "/page-2":
+        return  dbc.Container([
+
+    dbc.Card([
+        dbc.CardBody(html.H1("Russia / Sovjet Dashboard",
+                             className="text-primary m-3")
+    , className="mt-3"),
+      ]),
+    
+
+    dbc.Row([
+        dbc.Col(html.P("Choose a plot"), className="mt-1",
                 lg="4", xl={"size": 2, "offset": 2}),
         dbc.Col(
             dcc.Dropdown(id='sport-picker-dropdown', className='',
