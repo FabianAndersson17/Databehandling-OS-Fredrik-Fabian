@@ -37,7 +37,7 @@ def data_locator(sport):
     all_data_age["Age in percentage"] = all_data_age["ID"] / all_data_age["Total participants"]
 
     fig_medal = px.bar(medal_dist, x="NOC2", y=["gold count", "silver count", "bronze count"], title=f"Number of medals in {sport} per country",
-            labels={"value": "Medal count", "NOC2": "Countries"}, template="plotly_dark")
+            labels={"value": "Medal count", "NOC2": "Countries"}, template="seaborn")
     fig_medal.update_layout(barmode="group")
 
     fig_age = px.bar(sport_age_dist, x="Age", y="Age in percentage", title=f"Ages distrubution in {sport}", barmode = 'group', template="plotly_dark")
