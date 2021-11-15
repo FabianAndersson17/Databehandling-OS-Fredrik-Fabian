@@ -1,30 +1,29 @@
 import pandas as pd
 from dash import dcc, html
 import dash
-from load_data import StockDataLocal
+#from load_data import StockDataLocal
 from dash.dependencies import Output, Input
 import plotly_express as px
-from time_filtering import filter_time
 import dash_bootstrap_components as dbc
 
-stock_data_object = StockDataLocal()
+#stock_data_object = StockDataLocal()
 
 symbol_dict = dict(AAPL="Apple", NVDA="Nvidia", TSLA="Tesla", IBM="IBM")
 
 stock_options_dropdown = [{"label": name, "value": symbol}
                           for symbol, name in symbol_dict.items()]
 
-df_dict = {symbol: stock_data_object.stock_dataframe(symbol)
-           for symbol in symbol_dict}
+#df_dict = {symbol: stock_data_object.stock_dataframe(symbol)
+           #for symbol in symbol_dict}
 
 # OHLC options - Open, High, Low, Close
-ohlc_options = [{"label": option.capitalize(), "value": option}
-                for option in ["open", "high", "low", "close"]]
+#ohlc_options = [{"label": option.capitalize(), "value": option}
+               # for option in ["open", "high", "low", "close"]]
 
-slider_marks = {i: mark for i, mark in enumerate(
+#slider_marks = {i: mark for i, mark in enumerate(
     ["1 day", "1 week", "1 month", "3 months",
      "1 year", "5 years", "Max"]
-)}
+#)}
 
 stylesheets = [dbc.themes.MATERIA]
 app = dash.Dash(__name__, external_stylesheets=stylesheets,
