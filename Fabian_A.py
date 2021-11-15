@@ -28,11 +28,20 @@ def data_locator(sport):
     sport_age_dist = sport_data[sport_data["Age"].isin(sport_ages)]
     sport_age_dist = sport_age_dist["Age"].value_counts().reset_index().rename({"Age": "Age count", "index": "Age"}, axis="columns")
     sport_age_dist = sport_age_dist.sort_values(by="Age").reset_index(drop=True)
+    total_all2 = sport_age_dist['Age count'].sum()
+    sport_age_dist["Total participants"] = total_all2
+    sport_age_dist["Age in percentage"] = sport_age_dist["Age count"] / sport_age_dist["Total participants"]
+
+    all_data_age = athlete_data.groupby(["Age"]).count().reset_index()
+    total_all = all_data_age['ID'].sum()
+    all_data_age["Total participants"] = total_all
+    all_data_age["Age in percentage"] = all_data_age["ID"] / all_data_age["Total participants"]
 
     fig_medal = px.bar(medal_dist, x="NOC2", y=["gold count", "silver count", "bronze count"], title=f"Number of medals in {sport} per country",
             labels={"value": "Medal count", "NOC2": "Countries"})
     fig_medal.update_layout(barmode="group")
 
-    fig_age = px.bar(sport_age_dist, x="Age", y="Age count", title=f"Ages distrubution in {sport}")
+    fig_age = px.bar(sport_age_dist, x="Age", y="Age in percentage", title=f"Ages distrubution in {sport}", barmode = 'group')
+    fig_age.add_bar(name = "Age histogram all sports", x= all_data_age["Age"], y = all_data_age["Age in percentage"])
     
     return fig_medal, fig_age
