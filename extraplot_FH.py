@@ -14,7 +14,7 @@ athlete_events_per_year["Medal"] = athlete_events_per_year["Medal"].cumsum()
 athlete_events_per_year = athlete_events_per_year.sort_values(["Year"])
 
 
-fig = px.bar(athlete_events_per_year, x="Medal", y="NOC", color="NOC",
+fig = px.line(athlete_events_per_year, x="Medal", y="NOC", color="NOC",
   animation_frame="Year", range_x=[0,40000])
 fig.show()
 

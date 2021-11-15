@@ -12,7 +12,7 @@ symbol_dict = dict(TENNIS="Tennis", FOTBALL="Football", TAEKWONDO="Taekwondo", S
 stock_options_dropdown = [{"label": name, "value": symbol}
                           for name,symbol in symbol_dict.items()]
 
-stylesheets = [dbc.themes.JOURNAL]
+stylesheets = [dbc.themes.SOLAR]
 
 
 app = dash.Dash(__name__, external_stylesheets=stylesheets,
