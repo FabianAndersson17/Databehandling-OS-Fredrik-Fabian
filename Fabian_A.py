@@ -31,4 +31,4 @@ def data_locator(sport):
             labels={"value": "Medal count", "NOC2": "Countries"})
     fig_medal.update_layout(barmode="group")
     fig_age = px.bar(sport_age_dist, x="Age", y="Age count", title=f"Ages distrubution in {sport}")
-    return [fig_medal, fig_age]
+    return fig_age
