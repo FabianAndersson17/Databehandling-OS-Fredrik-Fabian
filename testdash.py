@@ -4,7 +4,6 @@ import dash
 from dash.dependencies import Output, Input
 import plotly_express as px
 import dash_bootstrap_components as dbc
-from FredrikH import testfunc
 from Fabian_A import data_locator
 
 
