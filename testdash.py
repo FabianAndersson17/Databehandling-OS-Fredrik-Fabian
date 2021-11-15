@@ -23,34 +23,34 @@ stylesheets = [dbc.themes.SOLAR]
 app = dash.Dash(__name__, external_stylesheets=stylesheets,
                 meta_tags=[dict(name="viewport", content="width=device-width, initial-scale=1.0")])
 
-app.layout = dbc.Container([
+#app.layout = dbc.Container([
 
-    dbc.Card([
-        dbc.CardBody(html.H1("Russia / Sovjet dashboard",
-                             className="text-primary m-3")
-    , className="mt-3"),
-        dbc.CardBody(
-    dcc.RadioItems(id='ohlc-radio', className='m-1',
-                               options=dashboard_names,
-                               value='close'
-                               )
-        , className="mt-4")]),
+    #dbc.Card([
+        #dbc.CardBody(html.H1("Russia / Sovjet dashboard",
+                           #  className="text-primary m-3")
+    #, className="mt-3"),
+     #   dbc.CardBody(
+   # dcc.RadioItems(id='ohlc-radio', className='m-1',
+       #                        options=dashboard_names,
+     #                          value='close'
+                        #       )
+      #  , className="mt-4")]),
     
 
-    dbc.Row([
-        dbc.Col(html.P("Choose a sport"), className="mt-1",
-                lg="4", xl={"size": 2, "offset": 2}),
-        dbc.Col(
-            dcc.Dropdown(id='sport-picker-dropdown', className='',
-                         options=stock_options_dropdown,
-                         value='AAPL'
-                         ),
-            lg="4", xl="3")]),
-        dcc.Graph(id = 'graph-picker'),
-        dcc.Graph(id = 'graph-picker2')
+    #dbc.Row([
+        #dbc.Col(html.P("Choose a sport"), className="mt-1",
+         #       lg="4", xl={"size": 2, "offset": 2}),
+        #dbc.Col(
+        #    dcc.Dropdown(id='sport-picker-dropdown', className='',
+        #                 options=stock_options_dropdown,
+        #                 value='AAPL'
+        #                 ),
+        #    lg="4", xl="3")]),
+        #dcc.Graph(id = 'graph-picker'),
+        #dcc.Graph(id = 'graph-picker2')
         
             
-            ])
+         #   ])
 
 @app.callback(
     Output("graph-picker", "figure"),
@@ -84,7 +84,7 @@ CONTENT_STYLE = {
 
 sidebar = html.Div(
     [
-        html.H2("Dash!", className="display-4"),
+        html.H2("Soviet", className="display-4"),
         html.Hr(),
         html.P(
             "Russia / Soviet through the Olympics", className="lead"
@@ -110,20 +110,17 @@ app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
     if pathname == "/":
-        return html.P("This is the content of the home page!")
+        return html.Img(src='assets/Flag_of_the_Soviet_Union.png')
     elif pathname == "/page-1":
-        return dbc.Container([
+        return html.P("Oh cool, this is page 1!")
+    elif pathname == "/page-2":
+        return  dbc.Container([
 
     dbc.Card([
-        dbc.CardBody(html.H1("Russia / Sovjet dashboard",
+        dbc.CardBody(html.H1("Choosen sports dashboard (Taekwondo, Tennis, Football & Speedskating",
                              className="text-primary m-3")
     , className="mt-3"),
-        dbc.CardBody(
-    dcc.RadioItems(id='ohlc-radio', className='m-1',
-                               options=dashboard_names,
-                               value='close'
-                               )
-        , className="mt-4")]),
+      ]),
     
 
     dbc.Row([
@@ -140,8 +137,6 @@ def render_page_content(pathname):
         
             
             ])
-    elif pathname == "/page-2":
-        return html.P("Oh cool, this is page 2!")
     # If the user tries to reach a different page, return a 404 message
     return dbc.Jumbotron(
         [
