@@ -9,7 +9,7 @@ from load_data import data_locator, russia_graphs
 #Creating some list with values and names for our dropdowns
 symbol_dict = dict(TENNIS="Tennis", FOTBALL="Football", TAEKWONDO="Taekwondo", SPEEDSKATING="Speed Skating")
 dashboard_name_dict = dict(Sovjet_Russia ="Sovjet / Russia Dashboard", Choosen_countries = "Choosen countries Dashboard")
-plot_name_dict = dict(Plot1 ="Plot 1", Plot2 = "Plot2")
+plot_name_dict = dict(BestSports = "bestSports", Medal ="medalGraph", Median = "medianGraph", GenderSplit = "genderGraph")
 plot_options_dropdown = [{"label": name, "value": symbol}
                           for name,symbol in plot_name_dict.items()]
 
@@ -29,13 +29,14 @@ app = dash.Dash(__name__, external_stylesheets=stylesheets,
 #When hitting a name in the dropdown, a new plot will appear.
 @app.callback(
     Output("plot-picker", "figure"),
+    Output("plot-picker2", "figure"),
     Input("plot-picker-dropdown", "value"))
 #getting the plot through a function in the other py-script.
-def update_soviet_graph(test):
+def update_soviet_graph(plot):
 
-    fig0 = russia_graphs()
+    fig3, fig4 = russia_graphs("medianGraph")
 
-    return fig0
+    return fig3, fig4
 #Two output in callback below to be able to plot two graphs in same page
 @app.callback(
     Output("graph-picker", "figure"),
@@ -140,6 +141,7 @@ def render_page_content(pathname):
                          ),
             lg="4", xl="3")]),
         dcc.Graph(id = 'plot-picker'),
+        dcc.Graph(id = 'plot-picker2')
         
             
             ])
