@@ -1,3 +1,4 @@
+import re
 import pandas as pd
 import plotly_express as px
 
@@ -88,6 +89,35 @@ def russia_graphs(grafPicker):
                 fig_procent_medals.update_layout(barmode="group")
                 return fig_procent_medals
 
+        if grafPicker == "medianGraph":
+                median_data_russia = russia_data.groupby(["Year"]).median().reset_index()
+                all_countries = athlete_data.groupby(["Year"]).median().reset_index()
+                fig_median_age = px.line(title = "Median age for Russia / Soviet per Olympic Game")
+                rus_sov_line = fig_median_age.add_scatter(name = "Russia / Sovjet" , y = median_data_russia["Age"], x = median_data_russia["Year"], mode='lines+markers')
+                all_countires = fig_median_age.add_scatter(name = "Average for all countries" , y = all_countries["Age"], x = all_countries["Year"], mode='lines+markers')
+
+                median_data_height_russia = russia_data.groupby(["Event"]).median().reset_index()
+                top5_tallest_events = median_data_russia.sort_values("Height",ascending=False).head(5)
+                top5_shortest_events = median_data_russia.sort_values("Height",ascending=True).head(5)
+                fig_median_height = px.bar(title = "Median height for Russia / Soviet per Olympic Game",)
+                tallest= fig_median_height.add_bar(name = "Top5 tallest sports" , y = top5_tallest_events ["Height"], x = top5_tallest_events ["Event"])
+                shortest = fig_median_height.add_bar(name = "Top5 shortest sports",y=  top5_shortest_events ["Height"], x = top5_shortest_events["Event"])
+
+                return fig_median_age, fig_median_height
+
         if grafPicker == "genderGraph":
-                pass
+                russia_female_data = russia_data[russia_data["Sex"].isin(["F"])].reset_index(drop=True) ## Takes out all females in the dataframe
+                russia_male_data = russia_data[russia_data["Sex"].isin(["M"])].reset_index(drop=True) ## Takes out all the makes in the dataframe
+                russia_female_sports = russia_female_data["Sport"].value_counts().reset_index().rename({"Sport": "Female count", "index": "Sport"}, axis="columns") ## Calulates the number of genders in each sport
+                russia_male_sports = russia_male_data["Sport"].value_counts().reset_index().rename({"Sport": "Male count", "index": "Sport"}, axis="columns")
+                russia_male_sports = russia_male_sports.sort_values(by="Sport", ascending=True).reset_index(drop=True) ## Sorts the numbers 
+                russia_female_sports = russia_female_sports.sort_values(by="Sport", ascending=True)
+                russia_sports_genders = russia_male_sports
+                russia_sports_genders = russia_sports_genders.merge(russia_female_sports, how="right") ## Merges the female dataframe into the genders dataframe
+                russia_sports_genders = russia_sports_genders.fillna(0) ## Fills missing values with 0
+                russia_sports_genders = russia_sports_genders.sort_values(by="Male count", ascending=False) ## Sorts the genders dataframe
+                fig_gender_in_sports = px.bar(russia_sports_genders, x="Sport", y=["Male count", "Female count"]) 
+                fig_gender_in_sports.update_layout(barmode="group")
+                
+                return fig_gender_in_sports
 
