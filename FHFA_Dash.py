@@ -4,7 +4,7 @@ import dash
 from dash.dependencies import Output, Input
 import plotly_express as px
 import dash_bootstrap_components as dbc
-from Fabian_A import data_locator, medals_taken
+from load_data import data_locator, russia_graphs
 
 #Creating some list with values and names for our dropdowns
 symbol_dict = dict(TENNIS="Tennis", FOTBALL="Football", TAEKWONDO="Taekwondo", SPEEDSKATING="Speed Skating")
@@ -33,7 +33,7 @@ app = dash.Dash(__name__, external_stylesheets=stylesheets,
 #getting the plot through a function in the other py-script.
 def update_soviet_graph(test):
 
-    fig0 = medals_taken()
+    fig0 = russia_graphs()
 
     return fig0
 #Two output in callback below to be able to plot two graphs in same page
