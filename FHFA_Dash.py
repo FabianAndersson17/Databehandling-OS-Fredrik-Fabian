@@ -6,34 +6,31 @@ import plotly_express as px
 import dash_bootstrap_components as dbc
 from Fabian_A import data_locator, medals_taken
 
-
+#Creating some list with values and names for our dropdowns
 symbol_dict = dict(TENNIS="Tennis", FOTBALL="Football", TAEKWONDO="Taekwondo", SPEEDSKATING="Speed Skating")
-
 dashboard_name_dict = dict(Sovjet_Russia ="Sovjet / Russia Dashboard", Choosen_countries = "Choosen countries Dashboard")
-
 plot_name_dict = dict(Plot1 ="Plot 1", Plot2 = "Plot2")
-
 plot_options_dropdown = [{"label": name, "value": symbol}
                           for name,symbol in plot_name_dict.items()]
 
 stock_options_dropdown = [{"label": name, "value": symbol}
                           for name,symbol in symbol_dict.items()]
-
 dashboard_names = [{"label": name, "value": symbol}
                           for name,symbol in dashboard_name_dict.items()]
 
-
+#Styling the dash with the template SOLAR
 stylesheets = [dbc.themes.SOLAR]
 
-
+#adding template and fix the set-up
 app = dash.Dash(__name__, external_stylesheets=stylesheets,
                 meta_tags=[dict(name="viewport", content="width=device-width, initial-scale=1.0")])
 
-
+#creating two callbacks, one for each dropdown. Connecting the callback with a function that is in the other py-script.
+#When hitting a name in the dropdown, a new plot will appear.
 @app.callback(
     Output("plot-picker", "figure"),
     Input("plot-picker-dropdown", "value"))
-
+#getting the plot through a function in the other py-script.
 def update_soviet_graph(test):
 
     fig0 = medals_taken()
@@ -51,7 +48,7 @@ def update_other_graph(sport):
 
     return fig1, fig2
 
-
+#Styling the sidebar. Note; Code is taken from Kokchuns link "how to create a sidebar".
 SIDEBAR_STYLE = {
     "position": "fixed",
     "top": 0,
@@ -62,14 +59,12 @@ SIDEBAR_STYLE = {
     "background-color": "#3c6364",
 }
 
-# the styles for the main content position it to the right of the sidebar and
-# add some padding.
 CONTENT_STYLE = {
     "margin-left": "18rem",
     "margin-right": "2rem",
     "padding": "2rem 1rem",
 }
-
+#Sidebar text and styling.
 sidebar = html.Div(
     [
         html.H2("Soviet", className="display-4"),
@@ -80,8 +75,8 @@ sidebar = html.Div(
         dbc.Nav(
             [
                 dbc.NavLink("Home", href="/", active="exact"),
-                dbc.NavLink("Soviet / Russia", href="/page-1", active="exact"),
-                dbc.NavLink("Choosen sports", href="/page-2", active="exact"),
+                dbc.NavLink("Choosen sports", href="/page-1", active="exact"),
+                dbc.NavLink("Soviet / Russia", href="/page-2", active="exact"),
             ],
             vertical=True,
             pills=True,
@@ -94,12 +89,13 @@ content = html.Div(id="page-content", style=CONTENT_STYLE)
 
 app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 
-
+#Here is the callback for the sidebar, which enables us to jump back and forward throught the sidebar options.
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
     if pathname == "/":
         return html.Img(src='assets/Flag_of_the_Soviet_Union.png')
     elif pathname == "/page-1":
+        # Below here is all the code that is in the "Page 1 - Choosen sports".
         return dbc.Container([
 
     dbc.Card([
