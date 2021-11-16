@@ -108,9 +108,9 @@ def russia_graphs(grafPicker):
                 top5_tallest_events = median_data_russia.sort_values("Height",ascending=False).head(5)
                 top5_shortest_events = median_data_russia.sort_values("Height",ascending=True).head(5)
                 fig_median_height = px.bar(title = "Median height for Russia / Soviet per Olympic Game", template="plotly_dark")
-                tallest= fig_median_height.add_bar(name = "Top5 tallest sports" , y = top5_tallest_events ["Height"], x = top5_tallest_events ["Event"])
-                shortest = fig_median_height.add_bar(name = "Top5 shortest sports",y=  top5_shortest_events ["Height"], x = top5_shortest_events["Event"])
-
+                fig_median_height.add_bar(name = "Top5 tallest sports" , y = top5_tallest_events ["Height"], x = top5_tallest_events ["Event"])
+                fig_median_height.add_bar(name = "Top5 shortest sports",y=  top5_shortest_events ["Height"], x = top5_shortest_events["Event"])
+                
                 return fig_median_age, fig_median_height
 
         if grafPicker == "genderGraph":

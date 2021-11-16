@@ -1,7 +1,7 @@
 #Setup
 import pandas as pd
 import plotly_express as px
-from utilities import plot_function
+
 
 
 #Reads in the file
@@ -41,7 +41,7 @@ def testfunc(sport):
     figC = px.line(title = "Median age for Russia / Sovjet per Olympic Game")
     rus_sov_line = figC.add_scatter(name = "Russia / Sovjet" , y = rus_sov["Age"], x = rus_sov["Year"], mode='lines+markers')
     all_countires = figC.add_scatter(name = "Average for all countries" , y = all_count["Age"], x = all_count["Year"], mode='lines+markers')
-    #figC.show()
+    figC.show()
 
     #Sorting and structuring the data for the plot-D.
     rus_sov_D = russia_sovjet_merged_all.groupby(["Event"]).median().reset_index()
