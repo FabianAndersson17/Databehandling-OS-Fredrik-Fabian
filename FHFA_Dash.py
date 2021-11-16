@@ -4,7 +4,7 @@ import dash
 from dash.dependencies import Output, Input
 import plotly_express as px
 import dash_bootstrap_components as dbc
-from Fabian_A import data_locator
+from Fabian_A import data_locator, medals_taken
 
 
 symbol_dict = dict(TENNIS="Tennis", FOTBALL="Football", TAEKWONDO="Taekwondo", SPEEDSKATING="Speed Skating")
@@ -34,9 +34,9 @@ app = dash.Dash(__name__, external_stylesheets=stylesheets,
     Output("plot-picker", "figure"),
     Input("plot-picker-dropdown", "value"))
 
-def update_graph(sport):
+def update_soviet_graph(test):
 
-    fig0 = data_locator(sport)
+    fig0 = medals_taken()
 
     return fig0
 
@@ -45,7 +45,7 @@ def update_graph(sport):
     Output("graph-picker2", "figure"),
     Input("sport-picker-dropdown", "value"))
 
-def update_graph(sport):
+def update_other_graph(sport):
 
     fig1, fig2 = data_locator(sport)
 
