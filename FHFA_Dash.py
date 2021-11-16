@@ -18,10 +18,10 @@ plot_options_dropdown = [{"label": name, "value": symbol}
 
 stock_options_dropdown = [{"label": name, "value": symbol}
                           for name,symbol in symbol_dict.items()]
+
 dashboard_names = [{"label": name, "value": symbol}
                           for name,symbol in dashboard_name_dict.items()]
-plot_options_dropdown = [{"label": name, "value": symbol}
-                          for name,symbol in symbol_dict.items()]
+
 
 stylesheets = [dbc.themes.SOLAR]
 
@@ -29,6 +29,16 @@ stylesheets = [dbc.themes.SOLAR]
 app = dash.Dash(__name__, external_stylesheets=stylesheets,
                 meta_tags=[dict(name="viewport", content="width=device-width, initial-scale=1.0")])
 
+
+@app.callback(
+    Output("plot-picker", "figure"),
+    Input("plot-picker-dropdown", "value"))
+
+def update_graph(sport):
+
+    fig0 = data_locator(sport)
+
+    return fig0
 
 @app.callback(
     Output("graph-picker", "figure"),
@@ -128,13 +138,12 @@ def render_page_content(pathname):
         dbc.Col(html.P("Choose a plot"), className="mt-1",
                 lg="4", xl={"size": 2, "offset": 2}),
         dbc.Col(
-            dcc.Dropdown(id='sport-picker-dropdown', className='',
+            dcc.Dropdown(id='plot-picker-dropdown', className='',
                          options=plot_options_dropdown,
                          value='AAPL'
                          ),
             lg="4", xl="3")]),
-        dcc.Graph(id = 'graph-picker'),
-        dcc.Graph(id = 'graph-picker2')
+        dcc.Graph(id = 'plot-picker'),
         
             
             ])
