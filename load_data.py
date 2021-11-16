@@ -87,7 +87,14 @@ def russia_graphs(grafPicker):
 
                 fig_procent_medals = px.bar(seasonal_medals_RUS, x="Year", y=["Procent winter medals", "Procent summer medals"], title="Procent of medals taken by russia per year", template="plotly_dark")
                 fig_procent_medals.update_layout(barmode="group")
-                return fig_procent_medals
+
+                athlete_year_data = russia_data.groupby(["NOC","Year"]).count().reset_index()
+                athlete_year_data = athlete_year_data.sort_values("Year")
+
+                fig_medals_per_yer_russia = px.line(title = "Medals per Olympic Game for Russia / Sovjet")
+                medals_taken = fig_medals_per_yer_russia.add_scatter(name = "Russia / Sovjet" , y = athlete_year_data["Medal"], x = athlete_year_data["Year"], mode='lines+markers')
+                
+                return fig_procent_medals, fig_medals_per_yer_russia
 
         if grafPicker == "medianGraph":
                 median_data_russia = russia_data.groupby(["Year"]).median().reset_index()
