@@ -19,7 +19,7 @@ def testfunc(sport):
     #Plotting the bar-graph.
     figA = px.bar(sorted_per_medal, title = "Russia & Sovjet top events in the Olympic Games (counted in nr of medal)",
                 y = "Medal" ,x = "Event", color = "Medal", range_y=(10,25))
-    #figA.show()
+    figA.show()
 
 
     #Sorting and structuring the data for the plot-B.
