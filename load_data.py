@@ -127,7 +127,7 @@ def russia_graphs(grafPicker):
                 fig_gender_in_sports = px.bar(russia_sports_genders, x="Sport", y=["Male count", "Female count"], template="plotly_dark", title="Gender distibution in the all sport for russia") 
                 fig_gender_in_sports.update_layout(barmode="group")
                 
-                return fig_gender_in_sports
+                return fig_gender_in_sports, None
 
         if grafPicker == "bestSports":
                 russia_olympic_events = russia_data.groupby(["Event"]).count().reset_index()
@@ -135,5 +135,5 @@ def russia_graphs(grafPicker):
                 russia_best_sports = russia_best_sports.head(10)
                 fig_russia_best_sports = px.bar(russia_best_sports, title = "Russia & Sovjet top events in the Olympic Games (counted in nr of medal)",
                 y = "Medal" ,x = "Event", color = "Medal", range_y=(10,25), template="plotly_dark")
-                return fig_russia_best_sports
+                return fig_russia_best_sports, None
 
