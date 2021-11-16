@@ -85,28 +85,29 @@ def russia_graphs(grafPicker):
 
                 seasonal_medals_RUS.sort_values(by="Year", ascending=True)
 
-                fig_procent_medals = px.bar(seasonal_medals_RUS, x="Year", y=["Procent winter medals", "Procent summer medals"], title="Procent of medals taken by russia per year", template="plotly_dark")
+                fig_procent_medals = px.bar(seasonal_medals_RUS, x="Year", y=["Procent winter medals", "Procent summer medals"], title="Procent of medals taken by russia per year",
+                                            template="plotly_dark")
                 fig_procent_medals.update_layout(barmode="group")
 
                 athlete_year_data = russia_data.groupby(["NOC","Year"]).count().reset_index()
                 athlete_year_data = athlete_year_data.sort_values("Year")
 
-                fig_medals_per_yer_russia = px.line(title = "Medals per Olympic Game for Russia / Sovjet")
+                fig_medals_per_yer_russia = px.line(title = "Medals per Olympic Game for Russia / Sovjet", template="plotly_dark")
                 medals_taken = fig_medals_per_yer_russia.add_scatter(name = "Russia / Sovjet" , y = athlete_year_data["Medal"], x = athlete_year_data["Year"], mode='lines+markers')
-                
+
                 return fig_procent_medals, fig_medals_per_yer_russia
 
         if grafPicker == "medianGraph":
                 median_data_russia = russia_data.groupby(["Year"]).median().reset_index()
                 all_countries = athlete_data.groupby(["Year"]).median().reset_index()
-                fig_median_age = px.line(title = "Median age for Russia / Soviet per Olympic Game")
+                fig_median_age = px.line(title = "Median age for Russia / Soviet per Olympic Game", template="plotly_dark")
                 rus_sov_line = fig_median_age.add_scatter(name = "Russia / Sovjet" , y = median_data_russia["Age"], x = median_data_russia["Year"], mode='lines+markers')
                 all_countires = fig_median_age.add_scatter(name = "Average for all countries" , y = all_countries["Age"], x = all_countries["Year"], mode='lines+markers')
 
                 median_data_height_russia = russia_data.groupby(["Event"]).median().reset_index()
                 top5_tallest_events = median_data_russia.sort_values("Height",ascending=False).head(5)
                 top5_shortest_events = median_data_russia.sort_values("Height",ascending=True).head(5)
-                fig_median_height = px.bar(title = "Median height for Russia / Soviet per Olympic Game",)
+                fig_median_height = px.bar(title = "Median height for Russia / Soviet per Olympic Game", template="plotly_dark")
                 tallest= fig_median_height.add_bar(name = "Top5 tallest sports" , y = top5_tallest_events ["Height"], x = top5_tallest_events ["Event"])
                 shortest = fig_median_height.add_bar(name = "Top5 shortest sports",y=  top5_shortest_events ["Height"], x = top5_shortest_events["Event"])
 
@@ -123,8 +124,16 @@ def russia_graphs(grafPicker):
                 russia_sports_genders = russia_sports_genders.merge(russia_female_sports, how="right") ## Merges the female dataframe into the genders dataframe
                 russia_sports_genders = russia_sports_genders.fillna(0) ## Fills missing values with 0
                 russia_sports_genders = russia_sports_genders.sort_values(by="Male count", ascending=False) ## Sorts the genders dataframe
-                fig_gender_in_sports = px.bar(russia_sports_genders, x="Sport", y=["Male count", "Female count"]) 
+                fig_gender_in_sports = px.bar(russia_sports_genders, x="Sport", y=["Male count", "Female count"], template="plotly_dark", title="Gender distibution in the all sport for russia") 
                 fig_gender_in_sports.update_layout(barmode="group")
                 
                 return fig_gender_in_sports
+
+        if grafPicker == "bestSports":
+                russia_olympic_events = russia_data.groupby(["Event"]).count().reset_index()
+                russia_best_sports = russia_olympic_events.sort_values("Medal",ascending=False)
+                russia_best_sports = russia_best_sports.head(10)
+                fig_russia_best_sports = px.bar(russia_best_sports, title = "Russia & Sovjet top events in the Olympic Games (counted in nr of medal)",
+                y = "Medal" ,x = "Event", color = "Medal", range_y=(10,25), template="plotly_dark")
+                return fig_russia_best_sports
 
