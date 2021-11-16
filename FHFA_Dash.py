@@ -32,9 +32,9 @@ app = dash.Dash(__name__, external_stylesheets=stylesheets,
     Output("plot-picker2", "figure"),
     Input("plot-picker-dropdown", "value"))
 #getting the plot through a function in the other py-script.
-def update_soviet_graph(plot):
+def update_soviet_graph(plotted):
 
-    fig3, fig4 = russia_graphs("medianGraph")
+    fig3, fig4 = russia_graphs(plotted)
 
     return fig3, fig4
 #Two output in callback below to be able to plot two graphs in same page
