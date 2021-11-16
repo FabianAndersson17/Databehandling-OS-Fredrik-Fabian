@@ -45,45 +45,49 @@ def data_locator(sport):
     
     return fig_medal, fig_age
 
-def medals_taken():
-        for i, item in enumerate(seasons_list):
-                russia_medals = russia_data[russia_data["Season"].isin([item])].reset_index(drop=True)
-                russia_gold = russia_medals[(russia_medals["Medal"] == "Gold")].reset_index(drop=True)
-                russia_silver = russia_medals[(russia_medals["Medal"] == "Silver")].reset_index(drop=True)
-                russia_bronze = russia_medals[(russia_medals["Medal"] == "Bronze")].reset_index(drop=True)
-                russia_seasonal_data = pd.concat([russia_gold, russia_silver, russia_bronze])
-                russia_seasonal_medals = russia_seasonal_data["Year"].value_counts().reset_index().rename({"Year": f"{item} medal count", "index": "Year"}, axis="columns")
-                russia_seasonal_medals = russia_seasonal_medals.sort_values(by="Year", ascending=True).reset_index(drop=True)
-                russia_seasonal_medals["Season"] = seasons_list[i]
-    
-                if item == "Summer":
-                        summer_rus_medals = russia_seasonal_medals
-                elif item == "Winter":
-                        winter_rus_medals = russia_seasonal_medals
+def russia_graphs(grafPicker):
+        if grafPicker == "medalGraph":
+                for i, item in enumerate(seasons_list):
+                        russia_medals = russia_data[russia_data["Season"].isin([item])].reset_index(drop=True)
+                        russia_gold = russia_medals[(russia_medals["Medal"] == "Gold")].reset_index(drop=True)
+                        russia_silver = russia_medals[(russia_medals["Medal"] == "Silver")].reset_index(drop=True)
+                        russia_bronze = russia_medals[(russia_medals["Medal"] == "Bronze")].reset_index(drop=True)
+                        russia_seasonal_data = pd.concat([russia_gold, russia_silver, russia_bronze])
+                        russia_seasonal_medals = russia_seasonal_data["Year"].value_counts().reset_index().rename({"Year": f"{item} medal count", "index": "Year"}, axis="columns")
+                        russia_seasonal_medals = russia_seasonal_medals.sort_values(by="Year", ascending=True).reset_index(drop=True)
+                        russia_seasonal_medals["Season"] = seasons_list[i]
+        
+                        if item == "Summer":
+                                summer_rus_medals = russia_seasonal_medals
+                        elif item == "Winter":
+                                winter_rus_medals = russia_seasonal_medals
 
-        for i, item in enumerate(seasons_list):
-                total_medals = athlete_data[athlete_data["Season"].isin([item])].reset_index(drop=True)
-                total_gold = total_medals[(total_medals["Medal"] == "Gold")].reset_index(drop=True)
-                total_silver = total_medals[(total_medals["Medal"] == "Silver")].reset_index(drop=True)
-                totla_bronze = total_medals[(total_medals["Medal"] == "Bronze")].reset_index(drop=True)
-                total_seasonal_data = pd.concat([total_gold, total_silver, totla_bronze])
-                total_seasonal_medals = total_seasonal_data["Year"].value_counts().reset_index().rename({"Year": f"{item} medal count", "index": "Year"}, axis="columns")
-                total_seasonal_medals = total_seasonal_medals.sort_values(by="Year", ascending=True).reset_index(drop=True)
-                total_seasonal_medals["Season"] = seasons_list[i]
-    
-                if item == "Summer":
-                        summer_total_medals = total_seasonal_medals
-                elif item == "Winter":
-                        winter_total_medals = total_seasonal_medals
+                for i, item in enumerate(seasons_list):
+                        total_medals = athlete_data[athlete_data["Season"].isin([item])].reset_index(drop=True)
+                        total_gold = total_medals[(total_medals["Medal"] == "Gold")].reset_index(drop=True)
+                        total_silver = total_medals[(total_medals["Medal"] == "Silver")].reset_index(drop=True)
+                        totla_bronze = total_medals[(total_medals["Medal"] == "Bronze")].reset_index(drop=True)
+                        total_seasonal_data = pd.concat([total_gold, total_silver, totla_bronze])
+                        total_seasonal_medals = total_seasonal_data["Year"].value_counts().reset_index().rename({"Year": f"{item} medal count", "index": "Year"}, axis="columns")
+                        total_seasonal_medals = total_seasonal_medals.sort_values(by="Year", ascending=True).reset_index(drop=True)
+                        total_seasonal_medals["Season"] = seasons_list[i]
+        
+                        if item == "Summer":
+                                summer_total_medals = total_seasonal_medals
+                        elif item == "Winter":
+                                winter_total_medals = total_seasonal_medals
 
 
-        winter_rus_medals["Procent winter medals"] = winter_rus_medals["Winter medal count"]/winter_total_medals["Winter medal count"]
-        summer_rus_medals["Procent summer medals"] = summer_rus_medals["Summer medal count"]/summer_total_medals["Summer medal count"]
-        seasonal_medals_RUS = pd.concat([winter_rus_medals, summer_rus_medals])
+                winter_rus_medals["Procent winter medals"] = winter_rus_medals["Winter medal count"]/winter_total_medals["Winter medal count"]
+                summer_rus_medals["Procent summer medals"] = summer_rus_medals["Summer medal count"]/summer_total_medals["Summer medal count"]
+                seasonal_medals_RUS = pd.concat([winter_rus_medals, summer_rus_medals])
 
-        seasonal_medals_RUS.sort_values(by="Year", ascending=True)
+                seasonal_medals_RUS.sort_values(by="Year", ascending=True)
 
-        fig_procent_medals = px.bar(seasonal_medals_RUS, x="Year", y=["Procent winter medals", "Procent summer medals"])
-        fig_procent_medals.update_layout(barmode="group")
-        return fig_procent_medals
+                fig_procent_medals = px.bar(seasonal_medals_RUS, x="Year", y=["Procent winter medals", "Procent summer medals"], title="Procent of medals taken by russia per year", template="plotly_dark")
+                fig_procent_medals.update_layout(barmode="group")
+                return fig_procent_medals
+
+        if grafPicker == "genderGraph":
+                pass
 
