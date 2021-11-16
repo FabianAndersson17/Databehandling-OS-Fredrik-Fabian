@@ -36,7 +36,7 @@ def update_soviet_graph(test):
     fig0 = medals_taken()
 
     return fig0
-
+#Two output in callback below to be able to plot two graphs in same page
 @app.callback(
     Output("graph-picker", "figure"),
     Output("graph-picker2", "figure"),
