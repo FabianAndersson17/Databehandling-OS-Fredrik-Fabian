@@ -9,7 +9,7 @@ from load_data import data_locator, russia_graphs
 #Creating some list with values and names for our dropdowns
 symbol_dict = dict(TENNIS="Tennis", FOTBALL="Football", TAEKWONDO="Taekwondo", SPEEDSKATING="Speed Skating")
 dashboard_name_dict = dict(Sovjet_Russia ="Sovjet / Russia Dashboard", Choosen_countries = "Choosen countries Dashboard")
-plot_name_dict = dict(BestSports = "bestSports", Medal ="medalGraph", Median = "medianGraph", GenderSplit = "genderGraph")
+plot_name_dict = dict(TopEventandGender = "bestSports", Medal ="medalGraph", Median = "medianGraph")
 plot_options_dropdown = [{"label": name, "value": symbol}
                           for name,symbol in plot_name_dict.items()]
 
