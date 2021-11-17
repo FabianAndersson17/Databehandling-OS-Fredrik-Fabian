@@ -52,7 +52,7 @@ def testfunc(sport):
     figD = px.bar(title = "Median height for Russia / Sovjet per Olympic Game",)
     tallest= figD.add_bar(name = "Top5 tallest sports" , y = top5_tallest_events ["Height"], x = top5_tallest_events ["Event"])
     shortest = figD.add_bar(name = "Top5 shortest sports",y=  top5_shortest_events ["Height"], x = top5_shortest_events["Event"])
-    #figD.show()
+    figD.show()
 
     #Exercise 2: Choosed sport = Football
 
