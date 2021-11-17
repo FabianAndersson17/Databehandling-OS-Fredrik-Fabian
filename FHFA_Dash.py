@@ -90,7 +90,7 @@ sidebar = html.Div(
 content = html.Div(id="page-content", style=CONTENT_STYLE)
 
 app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
-
+server = app.server
 #Here is the callback for the sidebar, which enables us to jump back and forward throught the sidebar options.
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
