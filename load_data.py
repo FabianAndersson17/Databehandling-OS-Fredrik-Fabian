@@ -41,7 +41,7 @@ def data_locator(sport):
             labels={"value": "Medal count", "NOC2": "Countries"}, template="plotly_dark")
     fig_medal.update_layout(barmode="group")
 
-    fig_age = px.bar(sport_age_dist, x="Age", y="Age in percentage", title=f"Ages distrubution in {sport}", barmode = 'group', template="plotly_dark", name = "Age histogram Russia/Soviet")
+    fig_age = px.bar(sport_age_dist, x="Age", y="Age in percentage", title=f"Ages distrubution in {sport}", barmode = 'group', template="plotly_dark")
     fig_age.add_bar(name = "Age histogram all sports", x= all_data_age["Age"], y = all_data_age["Age in percentage"])
     
     return fig_medal, fig_age
