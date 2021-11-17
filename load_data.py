@@ -41,7 +41,7 @@ def data_locator(sport):
             labels={"value": "Medal count", "NOC2": "Countries"}, template="plotly_dark")
     fig_medal.update_layout(barmode="group")
 
-    fig_age = px.bar(sport_age_dist, x="Age", y="Age in percentage", title=f"Ages distrubution in {sport}", barmode = 'group', template="plotly_dark")
+    fig_age = px.bar(sport_age_dist, x="Age", y="Age in percentage", title=f"Ages distrubution in {sport}", barmode = 'group', template="plotly_dark", name = "Age histogram Russia/Soviet")
     fig_age.add_bar(name = "Age histogram all sports", x= all_data_age["Age"], y = all_data_age["Age in percentage"])
     
     return fig_medal, fig_age
@@ -92,8 +92,8 @@ def russia_graphs(grafPicker):
                 athlete_year_data = russia_data.groupby(["NOC","Year"]).count().reset_index()
                 athlete_year_data = athlete_year_data.sort_values("Year")
 
-                fig_medals_per_yer_russia = px.line(title = "Medals per Olympic Game for Russia / Sovjet", template="plotly_dark")
-                medals_taken = fig_medals_per_yer_russia.add_scatter(name = "Russia / Sovjet" , y = athlete_year_data["Medal"], x = athlete_year_data["Year"], mode='lines+markers')
+                fig_medals_per_yer_russia = px.line(athlete_year_data, title = "Medals per Olympic Game for Russia / Sovjet", template="plotly_dark", y = "Medal" , x ="Year")
+                # medals_taken = fig_medals_per_yer_russia.add_scatter(name = "Russia / Sovjet" , x = athlete_data["Year"], y = athlete_data["Medal"], mode='lines+markers')
 
                 return fig_percent_medals, fig_medals_per_yer_russia
 
@@ -107,7 +107,7 @@ def russia_graphs(grafPicker):
                 median_data_height_russia = russia_data.groupby(["Event"]).median().reset_index()
                 top5_tallest_events = median_data_height_russia.sort_values("Height",ascending=False).head(5)
                 top5_shortest_events = median_data_height_russia.sort_values("Height",ascending=True).head(5)
-                fig_median_height = px.bar(title = "Median height for Russia / Soviet per Olympic Game", template="plotly_dark")
+                fig_median_height = px.bar(title = "Median height for Russia / Soviet per Olympic Game. (cm)", template="plotly_dark")
                 fig_median_height.add_bar(name = "Top5 tallest sports" , y = top5_tallest_events ["Height"], x = top5_tallest_events ["Event"])
                 fig_median_height.add_bar(name = "Top5 shortest sports",y=  top5_shortest_events ["Height"], x = top5_shortest_events["Event"])
                 
