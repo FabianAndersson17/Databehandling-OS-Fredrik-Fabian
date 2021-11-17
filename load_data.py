@@ -113,7 +113,13 @@ def russia_graphs(grafPicker):
                 
                 return fig_median_age, fig_median_height
 
-        if grafPicker == "genderGraph":
+        if grafPicker == "bestSports":
+                russia_olympic_events = russia_data.groupby(["Event"]).count().reset_index()
+                russia_best_sports = russia_olympic_events.sort_values("Medal",ascending=False)
+                russia_best_sports = russia_best_sports.head(10)
+                fig_russia_best_sports = px.bar(russia_best_sports, title = "Russia & Sovjet top events in the Olympic Games (counted in nr of medal)",
+                y = "Medal" ,x = "Event", color = "Medal", range_y=(10,25), template="plotly_dark")
+
                 russia_female_data = russia_data[russia_data["Sex"].isin(["F"])].reset_index(drop=True) ## Takes out all females in the dataframe
                 russia_male_data = russia_data[russia_data["Sex"].isin(["M"])].reset_index(drop=True) ## Takes out all the makes in the dataframe
                 russia_female_sports = russia_female_data["Sport"].value_counts().reset_index().rename({"Sport": "Female count", "index": "Sport"}, axis="columns") ## Calulates the number of genders in each sport
@@ -126,14 +132,6 @@ def russia_graphs(grafPicker):
                 russia_sports_genders = russia_sports_genders.sort_values(by="Male count", ascending=False) ## Sorts the genders dataframe
                 fig_gender_in_sports = px.bar(russia_sports_genders, x="Sport", y=["Male count", "Female count"], template="plotly_dark", title="Gender distibution in the all sport for russia") 
                 fig_gender_in_sports.update_layout(barmode="group")
-                
-                return fig_gender_in_sports, None
 
-        if grafPicker == "bestSports":
-                russia_olympic_events = russia_data.groupby(["Event"]).count().reset_index()
-                russia_best_sports = russia_olympic_events.sort_values("Medal",ascending=False)
-                russia_best_sports = russia_best_sports.head(10)
-                fig_russia_best_sports = px.bar(russia_best_sports, title = "Russia & Sovjet top events in the Olympic Games (counted in nr of medal)",
-                y = "Medal" ,x = "Event", color = "Medal", range_y=(10,25), template="plotly_dark")
-                return fig_russia_best_sports, None
+                return fig_russia_best_sports, fig_gender_in_sports
 
