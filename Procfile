@@ -1,1 +1,1 @@
-web: gunicorn FHFA_Dash.py:server
+web: gunicorn FHFA_Dash:server
