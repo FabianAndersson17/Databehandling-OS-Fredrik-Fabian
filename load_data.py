@@ -11,7 +11,7 @@ russia_data = athlete_data[athlete_data["Team"].isin(["Russia", "Soviet Union"])
 
 seasons_list = ["Summer", "Winter"]
 
-def data_locator(sport):
+def data_locator(sport): ## Takes out the gold, silver, bronze for the inputed sport
     sport_data = athlete_data[athlete_data["Sport"].isin([sport])].reset_index(drop=True)
 
     gold_dist = sport_data[sport_data["Medal"].isin(["Gold"])]
@@ -23,7 +23,7 @@ def data_locator(sport):
     medal_dist = pd.concat([gold_dist, silver_dist, bronze_dist], axis=1, join="outer")
     medal_dist = medal_dist.drop(["NOC1", "NOC3"], axis="columns")
 
-    sport_ages = sport_data["Age"].unique().tolist()
+    sport_ages = sport_data["Age"].unique().tolist()## Takes out the age for the given sport 
     sport_ages.sort()
     sport_age_dist = sport_data[sport_data["Age"].isin(sport_ages)]
     sport_age_dist = sport_age_dist["Age"].value_counts().reset_index().rename({"Age": "Age count", "index": "Age"}, axis="columns")
