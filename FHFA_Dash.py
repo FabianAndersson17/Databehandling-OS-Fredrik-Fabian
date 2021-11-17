@@ -24,6 +24,7 @@ stylesheets = [dbc.themes.SOLAR]
 #adding template and fix the set-up
 app = dash.Dash(__name__, external_stylesheets=stylesheets,
                 meta_tags=[dict(name="viewport", content="width=device-width, initial-scale=1.0")])
+server = app.server
 
 #creating two callbacks, one for each dropdown. Connecting the callback with a function that is in the other py-script.
 #When hitting a name in the dropdown, a new plot will appear.
