@@ -105,15 +105,21 @@ def russia_graphs(grafPicker):
                 all_countires = fig_median_age.add_scatter(name = "Average for all countries" , y = all_countries["Age"], x = all_countries["Year"], mode='lines+markers')
 
                 median_data_height_russia = russia_data.groupby(["Event"]).median().reset_index()
-                top5_tallest_events = median_data_russia.sort_values("Height",ascending=False).head(5)
-                top5_shortest_events = median_data_russia.sort_values("Height",ascending=True).head(5)
+                top5_tallest_events = median_data_height_russia.sort_values("Height",ascending=False).head(5)
+                top5_shortest_events = median_data_height_russia.sort_values("Height",ascending=True).head(5)
                 fig_median_height = px.bar(title = "Median height for Russia / Soviet per Olympic Game", template="plotly_dark")
                 fig_median_height.add_bar(name = "Top5 tallest sports" , y = top5_tallest_events ["Height"], x = top5_tallest_events ["Event"])
                 fig_median_height.add_bar(name = "Top5 shortest sports",y=  top5_shortest_events ["Height"], x = top5_shortest_events["Event"])
                 
                 return fig_median_age, fig_median_height
 
-        if grafPicker == "genderGraph":
+        if grafPicker == "bestSports":
+                russia_olympic_events = russia_data.groupby(["Event"]).count().reset_index()
+                russia_best_sports = russia_olympic_events.sort_values("Medal",ascending=False)
+                russia_best_sports = russia_best_sports.head(10)
+                fig_russia_best_sports = px.bar(russia_best_sports, title = "Russia & Sovjet top events in the Olympic Games (counted in nr of medal)",
+                y = "Medal" ,x = "Event", color = "Medal", range_y=(10,25), template="plotly_dark")
+
                 russia_female_data = russia_data[russia_data["Sex"].isin(["F"])].reset_index(drop=True) ## Takes out all females in the dataframe
                 russia_male_data = russia_data[russia_data["Sex"].isin(["M"])].reset_index(drop=True) ## Takes out all the makes in the dataframe
                 russia_female_sports = russia_female_data["Sport"].value_counts().reset_index().rename({"Sport": "Female count", "index": "Sport"}, axis="columns") ## Calulates the number of genders in each sport
@@ -126,14 +132,6 @@ def russia_graphs(grafPicker):
                 russia_sports_genders = russia_sports_genders.sort_values(by="Male count", ascending=False) ## Sorts the genders dataframe
                 fig_gender_in_sports = px.bar(russia_sports_genders, x="Sport", y=["Male count", "Female count"], template="plotly_dark", title="Gender distibution in the all sport for russia") 
                 fig_gender_in_sports.update_layout(barmode="group")
-                
-                return fig_gender_in_sports, None
 
-        if grafPicker == "bestSports":
-                russia_olympic_events = russia_data.groupby(["Event"]).count().reset_index()
-                russia_best_sports = russia_olympic_events.sort_values("Medal",ascending=False)
-                russia_best_sports = russia_best_sports.head(10)
-                fig_russia_best_sports = px.bar(russia_best_sports, title = "Russia & Sovjet top events in the Olympic Games (counted in nr of medal)",
-                y = "Medal" ,x = "Event", color = "Medal", range_y=(10,25), template="plotly_dark")
-                return fig_russia_best_sports, None
+                return fig_russia_best_sports, fig_gender_in_sports
 
