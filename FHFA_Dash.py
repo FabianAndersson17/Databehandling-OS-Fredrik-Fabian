@@ -7,13 +7,13 @@ import dash_bootstrap_components as dbc
 from load_data import data_locator, russia_graphs
 
 #Creating some list with values and names for our dropdowns
-symbol_dict = dict(TENNIS="Tennis", FOTBALL="Football", TAEKWONDO="Taekwondo", SPEEDSKATING="Speed Skating")
+symbol_dict = dict(Tennis="Tennis", Fotball="Football", Taekwondo="Taekwondo", Speedskating="Speed Skating")
 dashboard_name_dict = dict(Sovjet_Russia ="Sovjet / Russia Dashboard", Choosen_countries = "Choosen countries Dashboard")
 plot_name_dict = dict(TopEventandGender = "bestSports", Medal ="medalGraph", Median = "medianGraph")
 plot_options_dropdown = [{"label": name, "value": symbol}
                           for name,symbol in plot_name_dict.items()]
 
-stock_options_dropdown = [{"label": name, "value": symbol}
+sport_options_dropdown = [{"label": name, "value": symbol}
                           for name,symbol in symbol_dict.items()]
 dashboard_names = [{"label": name, "value": symbol}
                           for name,symbol in dashboard_name_dict.items()]
@@ -76,7 +76,7 @@ sidebar = html.Div(
         dbc.Nav(
             [
                 dbc.NavLink("Home", href="/", active="exact"),
-                dbc.NavLink("Choosen sports", href="/page-1", active="exact"),
+                dbc.NavLink("Sport data", href="/page-1", active="exact"),
                 dbc.NavLink("Soviet / Russia", href="/page-2", active="exact"),
             ],
             vertical=True,
@@ -100,7 +100,7 @@ def render_page_content(pathname):
         return dbc.Container([
 
     dbc.Card([
-        dbc.CardBody(html.H1("Choosen sports dashboard (Taekwondo, Tennis, Football & Speedskating",
+        dbc.CardBody(html.H1("Sport data\n(Taekwondo, Tennis, Football & Speedskating)",
                              className="text-primary m-3")
     , className="mt-3"),
       ]),
@@ -111,8 +111,8 @@ def render_page_content(pathname):
                 lg="4", xl={"size": 2, "offset": 2}),
         dbc.Col(
             dcc.Dropdown(id='sport-picker-dropdown', className='',
-                         options=stock_options_dropdown,
-                         value='AAPL'
+                         options=sport_options_dropdown,
+                         value='Tennis'
                          ),
             lg="4", xl="3")]),
         dcc.Graph(id = 'graph-picker'),
@@ -137,7 +137,7 @@ def render_page_content(pathname):
         dbc.Col(
             dcc.Dropdown(id='plot-picker-dropdown', className='',
                          options=plot_options_dropdown,
-                         value='AAPL'
+                         value='medalGraph'
                          ),
             lg="4", xl="3")]),
         dcc.Graph(id = 'plot-picker'),
