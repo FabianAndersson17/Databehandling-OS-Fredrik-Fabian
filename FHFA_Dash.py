@@ -49,7 +49,7 @@ def update_other_graph(sport):
 
     return fig1, fig2
 
-#Styling the sidebar. Note; Code is taken from Kokchuns link "how to create a sidebar".
+#Styling the sidebar. Note; Code is taken from Kokchuns link "how to create a sidebar". Link here: https://dash-bootstrap-components.opensource.faculty.ai/examples/simple-sidebar/
 SIDEBAR_STYLE = {
     "position": "fixed",
     "top": 0,
