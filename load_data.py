@@ -20,7 +20,7 @@ def data_locator(sport): ## Takes out the gold, silver, bronze for the inputed s
     gold_dist = gold_dist["NOC"].value_counts().reset_index().rename({"NOC": "gold count", "index": "NOC1"}, axis="columns")
     silver_dist = silver_dist["NOC"].value_counts().reset_index().rename({"NOC": "silver count", "index": "NOC2"}, axis="columns")
     bronze_dist = bronze_dist["NOC"].value_counts().reset_index().rename({"NOC": "bronze count", "index": "NOC3"}, axis="columns")
-    medal_dist = pd.concat([gold_dist, silver_dist, bronze_dist], axis=1, join="outer")
+    medal_dist = pd.concat([gold_dist, silver_dist, bronze_dist], axis=1, join="outer") ## Info on concatenation found at https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.concat.html
     medal_dist = medal_dist.drop(["NOC1", "NOC3"], axis="columns")
 
     sport_ages = sport_data["Age"].unique().tolist()## Takes out the age for the given sport 
@@ -42,13 +42,13 @@ def data_locator(sport): ## Takes out the gold, silver, bronze for the inputed s
     fig_medal.update_layout(barmode="group")
 
     fig_age = px.bar(sport_age_dist, x="Age", y="Age in percentage", title=f"Ages distrubution in {sport}", barmode = 'group', template="plotly_dark") ## Plots the age distobution for all the countries
-    fig_age.add_bar(name = "Age histogram all sports", x= all_data_age["Age"], y = all_data_age["Age in percentage"])
+    fig_age.add_bar(name = "Age histogram all sports", x= all_data_age["Age"], y = all_data_age["Age in percentage"])  ## Info about ploty template where found at https://plotly.com/python/templates/
     
     return fig_medal, fig_age
 
 def russia_graphs(grafPicker): ## Gives a diffrent plot depending on the string that is inputed
         if grafPicker == "medalGraph":
-                for i, item in enumerate(seasons_list): ## Takes out the gold, silver and bronze medals in russia
+                for i, item in enumerate(seasons_list): ## Takes out the gold, silver and bronze medals in russia | Info on enumerate found on https://realpython.com/python-enumerate/
                         russia_medals = russia_data[russia_data["Season"].isin([item])].reset_index(drop=True)
                         russia_gold = russia_medals[(russia_medals["Medal"] == "Gold")].reset_index(drop=True)
                         russia_silver = russia_medals[(russia_medals["Medal"] == "Silver")].reset_index(drop=True)
